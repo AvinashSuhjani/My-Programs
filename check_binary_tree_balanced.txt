@@ -1,0 +1,64 @@
+#include<iostream>
+using namespace std;
+struct node 
+{
+	int data;
+	struct node *left;
+	struct node *right;
+};
+
+struct node* newNode(int value)
+{
+
+	struct node *newnode= new struct node;
+	newnode->data=value;
+	newnode->left=newnode->right=NULL;
+	return newnode;
+}
+
+int height(struct node *root)
+{
+	if(root==NULL)
+		return 0;
+	int ltree=height(root->left);
+	int rtree=height(root->right);
+	if(ltree>rtree)
+		return ltree+1;
+	else
+		return rtree+1;
+	
+}
+
+int checkBalancedTree(struct node *root)
+{
+	if(root==NULL)
+		return 1;
+	int h_ltree=height(root->left);
+	int h_rtree=height(root->right);
+	int h=h_ltree-h_rtree;
+	if( (h>=-1 && h<=1) && checkBalancedTree(root->left) && checkBalancedTree(root->right) )
+		return 1;
+	else
+		return 0;
+	
+	
+}
+
+int main()
+{
+	struct node *root=newNode(1);
+	root->left=newNode(2);
+	root->right=newNode(3);
+	root->left->left=newNode(4);
+	root->left->left->left=newNode(5);
+    if(checkBalancedTree(root))	
+	{
+		cout<<"The tree is balanced "<<endl;
+	}
+	else
+	{
+		cout<<"The tree is not balanced "<<endl;
+	}	
+	return 0;
+}
+
