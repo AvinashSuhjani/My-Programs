@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node *left;
+    struct node*right;
+};
+
+
+
+struct node * newNode(int data)
+{
+    struct node *newnode=new struct node;
+    newnode->left=newnode->right=NULL;
+    newnode->data=data;
+    return newnode;
+}
+
+
+
+bool printAncestor(struct node *node,int element)
+{
+    if(node==NULL)
+        return false;
+    if(node->data == element)
+        return true;
+    if(printAncestor(node->left,element) || printAncestor(node->right,element) )
+    {
+        cout<<node->data<<endl;
+        return true;
+    }    
+    return false;
+}
+
+
+int main()
+{
+   struct node *root=newNode(2);
+   root->left=newNode(3);
+   root->right=newNode(4);
+   root->left->left=newNode(5);
+   root->left->right=newNode(6);
+   root->right->right=newNode(7);
+   printAncestor(root,7);
+   
+   return 0;
+}
+
